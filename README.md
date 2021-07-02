@@ -11,6 +11,6 @@ Este proyecto consiste en una tienda virtual de venta de libros.
 
 1. Christopher Tineo
 2. Elahine Molina
-3. Oscar Durán
+3. Oscar Durán Cuello
 4. Kevin Joa
 5. William Sang
