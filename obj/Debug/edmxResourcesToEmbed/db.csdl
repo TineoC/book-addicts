@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BibliotecaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="BibliotecaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Book" EntityType="BibliotecaModel.Book" />
+    <EntitySet Name="User" EntityType="BibliotecaModel.User" />
+  </EntityContainer>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="year" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="publisher" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="createdDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="cover" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="author" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="genre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="lastName" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="320" FixedLength="false" Unicode="false" />
+    <Property Name="createdDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+</Schema>
