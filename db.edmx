@@ -18,31 +18,159 @@
           <Property Name="cover" Type="varchar(max)" />
           <Property Name="author" Type="varchar" MaxLength="250" />
           <Property Name="genre" Type="varchar" MaxLength="30" />
+          <Property Name="valoration" Type="float" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="idBook" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="idUser" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="comment" Type="varchar(max)" Nullable="false" />
+          <Property Name="createdDate" Type="datetime" Nullable="false" />
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="70" Nullable="false" />
-          <Property Name="lastName" Type="varchar" MaxLength="70" Nullable="false" />
           <Property Name="username" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="email" Type="varchar" MaxLength="320" Nullable="false" />
           <Property Name="createdDate" Type="datetime" Nullable="false" />
+          <Property Name="userType" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <EntityType Name="Valoration">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="idBook" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="idUser" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="userValoration" Type="float" Nullable="false" />
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Comment_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="idBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Valoration_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Valoration" Type="Self.Valoration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Valoration">
+              <PropertyRef Name="idBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Valoration_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Valoration" Type="Self.Valoration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Valoration">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="books_login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="login_books" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="BibliotecaModelStoreContainer">
           <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Valoration" EntityType="Self.Valoration" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comment_Book" Association="Self.FK_Comment_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_User" Association="Self.FK_Comment_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Valoration_Book" Association="Self.FK_Valoration_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Valoration" EntitySet="Valoration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Valoration_User" Association="Self.FK_Valoration_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Valoration" EntitySet="Valoration" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BibliotecaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="BibliotecaEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="books_login" ReturnType="Collection(BibliotecaModel.books_login_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="Book" EntityType="BibliotecaModel.Book" />
+          <EntitySet Name="Comment" EntityType="BibliotecaModel.Comment" />
           <EntitySet Name="User" EntityType="BibliotecaModel.User" />
+          <EntitySet Name="Valoration" EntityType="BibliotecaModel.Valoration" />
+          <AssociationSet Name="FK_Comment_Book" Association="BibliotecaModel.FK_Comment_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Valoration_Book" Association="BibliotecaModel.FK_Valoration_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Valoration" EntitySet="Valoration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_User" Association="BibliotecaModel.FK_Comment_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Valoration_User" Association="BibliotecaModel.FK_Valoration_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Valoration" EntitySet="Valoration" />
+          </AssociationSet>
+          <FunctionImport Name="login_books" ReturnType="Collection(BibliotecaModel.login_books_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="books_login_Result">
+          <Property Type="Guid" Name="id" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="70" />
+          <Property Type="String" Name="lastName" Nullable="false" MaxLength="70" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="64" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="320" />
+          <Property Type="DateTime" Name="createdDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="userType" Nullable="false" MaxLength="20" />
+        </ComplexType>
         <EntityType Name="Book">
           <Key>
             <PropertyRef Name="id" />
@@ -56,28 +184,124 @@
           <Property Name="cover" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="author" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="genre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="valoration" Type="Double" />
+          <NavigationProperty Name="Comment" Relationship="BibliotecaModel.FK_Comment_Book" FromRole="Book" ToRole="Comment" />
+          <NavigationProperty Name="Valoration1" Relationship="BibliotecaModel.FK_Valoration_Book" FromRole="Book" ToRole="Valoration" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="idBook" Type="Guid" Nullable="false" />
+          <Property Name="idUser" Type="Guid" Nullable="false" />
+          <Property Name="comment1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="createdDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="BibliotecaModel.FK_Comment_Book" FromRole="Comment" ToRole="Book" />
+          <NavigationProperty Name="User" Relationship="BibliotecaModel.FK_Comment_User" FromRole="Comment" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="lastName" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
           <Property Name="username" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="320" FixedLength="false" Unicode="false" />
           <Property Name="createdDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="userType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Comment" Relationship="BibliotecaModel.FK_Comment_User" FromRole="User" ToRole="Comment" />
+          <NavigationProperty Name="Valoration" Relationship="BibliotecaModel.FK_Valoration_User" FromRole="User" ToRole="Valoration" />
         </EntityType>
-      </Schema>
+        <EntityType Name="Valoration">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="idBook" Type="Guid" Nullable="false" />
+          <Property Name="idUser" Type="Guid" Nullable="false" />
+          <Property Name="userValoration" Type="Double" Nullable="false" />
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="BibliotecaModel.FK_Valoration_Book" FromRole="Valoration" ToRole="Book" />
+          <NavigationProperty Name="User" Relationship="BibliotecaModel.FK_Valoration_User" FromRole="Valoration" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Comment_Book">
+          <End Type="BibliotecaModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="BibliotecaModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="idBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Valoration_Book">
+          <End Type="BibliotecaModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="BibliotecaModel.Valoration" Role="Valoration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Valoration">
+              <PropertyRef Name="idBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_User">
+          <End Type="BibliotecaModel.User" Role="User" Multiplicity="1" />
+          <End Type="BibliotecaModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Valoration_User">
+          <End Type="BibliotecaModel.User" Role="User" Multiplicity="1" />
+          <End Type="BibliotecaModel.Valoration" Role="Valoration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Valoration">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="login_books_Result">
+          <Property Type="Guid" Name="id" Nullable="false" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="64" />
+          <Property Type="DateTime" Name="createdDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="userType" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="BibliotecaModelStoreContainer" CdmEntityContainer="BibliotecaEntities">
+          <FunctionImportMapping FunctionImportName="books_login" FunctionName="BibliotecaModel.Store.books_login">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BibliotecaModel.books_login_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="userType" ColumnName="userType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="Book">
             <EntityTypeMapping TypeName="BibliotecaModel.Book">
               <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="valoration" ColumnName="valoration" />
                 <ScalarProperty Name="genre" ColumnName="genre" />
                 <ScalarProperty Name="author" ColumnName="author" />
                 <ScalarProperty Name="cover" ColumnName="cover" />
@@ -90,19 +314,49 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="BibliotecaModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="comment1" ColumnName="comment" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="idBook" ColumnName="idBook" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="BibliotecaModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="userType" ColumnName="userType" />
                 <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="lastName" ColumnName="lastName" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Valoration">
+            <EntityTypeMapping TypeName="BibliotecaModel.Valoration">
+              <MappingFragment StoreEntitySet="Valoration">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userValoration" ColumnName="userValoration" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="idBook" ColumnName="idBook" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="login_books" FunctionName="BibliotecaModel.Store.login_books">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BibliotecaModel.login_books_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="userType" ColumnName="userType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

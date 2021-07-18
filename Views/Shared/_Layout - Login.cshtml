@@ -10,17 +10,14 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body style="height: 100%">
+<body style="height: 100vh">
     <nav class="navbar navbar-expand-md navbar-light navbar-fixed-top bg-light">
-        <a class="navbar-brand" href="~/Books" styles="text-align: center">Inicio</a>
+        <a class="navbar-brand" href="~/Books/Login" styles="text-align: center">Login </a>
 
         <div class="collapse navbar-collapse align-items-middle" id="navbarSupportedContent" style="display: flex !important">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="~/Books/Login">Login <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="~/Books/Create">Añadir libro</a>
+                    <a class="nav-link" href="~/Books"> Inicio <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
         </div>
@@ -28,7 +25,7 @@
 
     @RenderBody()
 
-    <div class="footer-copyright text-center py-3 bg-dark align-middle navbar-static-bottom">
+    <div class="footer-copyright text-center py-3 bg-dark align-middle fixed-bottom">
         <p class="text-light" style="margin:0">&copy; @DateTime.Now.Year - Con mucho &hearts; para Omar Frometa</p>
     </div>
 

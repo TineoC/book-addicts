@@ -13,21 +13,113 @@
     <Property Name="cover" Type="varchar(max)" />
     <Property Name="author" Type="varchar" MaxLength="250" />
     <Property Name="genre" Type="varchar" MaxLength="30" />
+    <Property Name="valoration" Type="float" />
+  </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="idBook" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="idUser" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="comment" Type="varchar(max)" Nullable="false" />
+    <Property Name="createdDate" Type="datetime" Nullable="false" />
+    <Property Name="id" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="name" Type="varchar" MaxLength="70" Nullable="false" />
-    <Property Name="lastName" Type="varchar" MaxLength="70" Nullable="false" />
     <Property Name="username" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="password" Type="varchar" MaxLength="64" Nullable="false" />
-    <Property Name="email" Type="varchar" MaxLength="320" Nullable="false" />
     <Property Name="createdDate" Type="datetime" Nullable="false" />
+    <Property Name="userType" Type="varchar" MaxLength="20" Nullable="false" />
   </EntityType>
+  <EntityType Name="Valoration">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="idBook" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="idUser" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="userValoration" Type="float" Nullable="false" />
+    <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Comment_Book">
+    <End Role="Book" Type="Self.Book" Multiplicity="1" />
+    <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="idBook" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comment_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="idUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Valoration_Book">
+    <End Role="Book" Type="Self.Book" Multiplicity="1" />
+    <End Role="Valoration" Type="Self.Valoration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Valoration">
+        <PropertyRef Name="idBook" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Valoration_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Valoration" Type="Self.Valoration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Valoration">
+        <PropertyRef Name="idUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="books_login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="login_books" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+  </Function>
   <EntityContainer Name="BibliotecaModelStoreContainer">
     <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Valoration" EntityType="Self.Valoration" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Comment_Book" Association="Self.FK_Comment_Book">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Comment" EntitySet="Comment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comment_User" Association="Self.FK_Comment_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Comment" EntitySet="Comment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Valoration_Book" Association="Self.FK_Valoration_Book">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Valoration" EntitySet="Valoration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Valoration_User" Association="Self.FK_Valoration_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Valoration" EntitySet="Valoration" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

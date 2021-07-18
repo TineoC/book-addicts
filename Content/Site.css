@@ -1,4 +1,10 @@
-﻿body {
+﻿@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Roboto&display=swap');
+
+* {
+    font-family: 'Lato', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -21,4 +27,14 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.book-name {
+    color: #182e49;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.nav-item {
+    padding-right: 20px;
 }

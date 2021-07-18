@@ -47,32 +47,26 @@ namespace Biblioteca.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,title,year,publisher,createdDate,description,cover,author,genre")] Book book)
+        public ActionResult Create([Bind(Include = "id,title,year,publisher,createdDate,description,cover,author,genre,valoration")] Book book)
         {
-            if (ModelState.IsValid)
+            book.id = Guid.NewGuid();
+            book.createdDate = DateTime.Now;
+            if (Request.Files.Count > 0)
             {
-                book.id = Guid.NewGuid();
-                book.createdDate = DateTime.Now;
+                var cover = Request.Files[0];
 
-                if (Request.Files.Count > 0)
+                if (cover != null && cover.ContentLength > 0)
                 {
-                    var cover = Request.Files[0];
+                    var fileName = Path.GetFileName(cover.FileName);
+                    var path = Path.Combine(Server.MapPath("/Public/Covers/"), fileName);
+                    cover.SaveAs(path);
 
-                    if (cover != null && cover.ContentLength > 0)
-                    {
-                        var fileName = Path.GetFileName(cover.FileName);
-                        var path = Path.Combine(Server.MapPath("/Public/Covers/"), fileName);
-                        cover.SaveAs(path);
-
-                        book.cover = fileName;
-                    }
+                    book.cover = fileName;
                 }
-                db.Book.Add(book);
-                db.SaveChanges();
-                return RedirectToAction("Index");
             }
-
-            return View(book);
+            db.Book.Add(book);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Books/Edit/5
@@ -95,10 +89,23 @@ namespace Biblioteca.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,seq,title,year,publisher,createdDate,description,cover,author,genre")] Book book)
+        public ActionResult Edit([Bind(Include = "id,title,year,publisher,createdDate,description,cover,author,genre,valoration")] Book book)
         {
             if (ModelState.IsValid)
             {
+                if (Request.Files.Count > 0)
+                {
+                    var cover = Request.Files[0];
+
+                    if (cover != null && cover.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(cover.FileName);
+                        var path = Path.Combine(Server.MapPath("/Public/Covers/"), fileName);
+                        cover.SaveAs(path);
+
+                        book.cover = fileName;
+                    }
+                }
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -130,6 +137,42 @@ namespace Biblioteca.Controllers
             db.Book.Remove(book);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // GET: Books/Login
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        // POST: Books/Login
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login([Bind(Include = "username,password")] User user, string login, string register)
+        {
+            if (!string.IsNullOrEmpty(login))
+            {
+                string username = Request["username"];
+                string password = Request["password"];
+                try
+                {
+                    if (db.login_books(username, password).Count() > 0)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                catch
+                {
+                    return View(user);
+                }
+            }
+            else if (!string.IsNullOrEmpty(register))
+            {
+                return RedirectToAction("Create", "Users");
+            }
+            return View(user);
         }
 
         protected override void Dispose(bool disposing)
