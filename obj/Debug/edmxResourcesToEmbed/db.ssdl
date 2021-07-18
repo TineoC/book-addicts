@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="BibliotecaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Biblioteca.dbo.Book' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Book">
     <Key>
       <PropertyRef Name="id" />
+      <PropertyRef Name="title" />
+      <PropertyRef Name="createdDate" />
     </Key>
     <Property Name="id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="title" Type="varchar" MaxLength="250" Nullable="false" />
@@ -14,9 +18,17 @@
     <Property Name="author" Type="varchar" MaxLength="250" />
     <Property Name="genre" Type="varchar" MaxLength="30" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Biblioteca.dbo.User' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="lastName" />
+      <PropertyRef Name="username" />
+      <PropertyRef Name="password" />
+      <PropertyRef Name="email" />
+      <PropertyRef Name="createdDate" />
     </Key>
     <Property Name="id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="70" Nullable="false" />
@@ -27,7 +39,29 @@
     <Property Name="createdDate" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityContainer Name="BibliotecaModelStoreContainer">
-    <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Book" EntityType="Self.Book" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Book].[id] AS [id], 
+    [Book].[title] AS [title], 
+    [Book].[year] AS [year], 
+    [Book].[publisher] AS [publisher], 
+    [Book].[createdDate] AS [createdDate], 
+    [Book].[description] AS [description], 
+    [Book].[cover] AS [cover], 
+    [Book].[author] AS [author], 
+    [Book].[genre] AS [genre]
+    FROM [dbo].[Book] AS [Book]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="User" EntityType="Self.User" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [User].[id] AS [id], 
+    [User].[name] AS [name], 
+    [User].[lastName] AS [lastName], 
+    [User].[username] AS [username], 
+    [User].[password] AS [password], 
+    [User].[email] AS [email], 
+    [User].[createdDate] AS [createdDate]
+    FROM [dbo].[User] AS [User]</DefiningQuery>
+    </EntitySet>
   </EntityContainer>
 </Schema>

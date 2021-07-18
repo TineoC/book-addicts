@@ -6,24 +6,214 @@
 
 <h2>Details</h2>
 
+<head>
+    <style>
+        #reader {
+            float: left;
+        }
+
+            #reader ol {
+                margin: 0;
+                padding: 0;
+            }
+
+            #reader li {
+                list-style: none outside none;
+                margin-bottom: 6px;
+            }
+
+            #reader .comment_box {
+                background: none repeat scroll 0 0 #F6F6F6;
+                float: left;
+                margin-bottom: 20px;
+                padding: 5px;
+                box-sizing: content-box;
+                border: 1px solid #CCCCCC;
+                width: 100%;
+            }
+
+            #reader .comment-meta {
+                margin-bottom: 4px;
+                overflow: auto;
+            }
+
+            #reader .commentsuser {
+                float: left;
+                font-size: 18px;
+                color: #000000;
+                font-weight: bold;
+            }
+
+            #reader .comment_date {
+                float: right;
+                font-size: 12px;
+                color: #000;
+            }
+
+            #reader .comment_rating {
+                float: right;
+                font-size: 12px;
+                color: #000;
+            }
+
+            #reader .comment-body {
+                color: #848484;
+                font-size: 14px;
+            }
+
+
+        ol li{
+            list-style-type: none;
+        }
+
+    </style>
+</head>
+
+<div class="row">
+
+    <!--Libro Principal-->
+    <div class="col-md-6">
+        <center>
+            <img src="@Html.DisplayFor(model => model.cover)" />
+            <br />
+            <h3>Rating 4.3 de 5</h3>
+        </center>
+    </div>
+    <div class="col-md-6">
+        <br /><br /><br />
+        <h1>@Html.DisplayFor(model => model.title)</h1>
+        <h4>@Html.DisplayFor(model => model.author)</h4>
+        <br />
+        <p>@Html.DisplayFor(model => model.description)</p>
+        <br />
+        <h4>Publicado por: @Html.DisplayFor(model => model.publisher) </h4>
+        <h4>Publicado en: @Html.DisplayFor(model => model.year) </h4>
+        <h4>Etiquetado como: @Html.DisplayFor(model => model.genre) </h4>
+    </div>
+
+    <!--Recomendaciones-->
+    <div class="col-md-12">
+        <center>
+            <hr style="width:100%;text-align:left;margin-left:0;color:black;background-color:black;height:2px">
+            <br />
+            <h1>Recomendaciones</h1>
+            <br />
+        </center>
+    </div>
+
+    <!--Libros Recomendados-->
+    <div class="col-md-3">
+        <center>
+            <img src="https://cdn.shopify.com/s/files/1/2388/7891/products/MC5-Los-mejores-cuentos-Conan-Doyle_360x.jpg?v=1626202596" width="180" height="280" />
+        </center>
+        <h4>Antes del fin</h4>
+        <h6>ERNESTO SABATO</h6>
+    </div>
+    <div class="col-md-3">
+        <center>
+            <img src="https://cdn.shopify.com/s/files/1/2388/7891/products/MC5-Los-mejores-cuentos-Conan-Doyle_360x.jpg?v=1626202596" width="180" height="280" />
+        </center>
+        <h4>
+            El kamasutra de Grey Descubre las posturas más
+            excitantes del bestseller
+        </h4>
+        <h6>LAURA ELIAS</h6>
+    </div>
+    <div class="col-md-3">
+        <center>
+            <img src="https://cdn.shopify.com/s/files/1/2388/7891/products/MC5-Los-mejores-cuentos-Conan-Doyle_360x.jpg?v=1626202596" width="180" height="280" />
+        </center>
+        <h4>Cronicas marcianas</h4>
+        <h6>RAY BRADBURY</h6>
+    </div>
+    <div class="col-md-3">
+        <center>
+            <img src="https://cdn.shopify.com/s/files/1/2388/7891/products/MC5-Los-mejores-cuentos-Conan-Doyle_360x.jpg?v=1626202596" width="180" height="280" />
+        </center>
+        <h4>El viento de las horas</h4>
+        <h6>ANGELES MASTRETTA</h6>
+    </div>
+
+    <!--Buton de volver a Inicio-->
+    <div class="col-md-12">
+        <center>
+            <br />
+            <button class="btn" style="width:40%">@Html.ActionLink("Back to List", "Index")</button>
+            <br /><br /><br />
+            <hr style="width:100%;text-align:left;margin-left:0;color:black;background-color:black;height:2px">
+        </center>
+    </div>
+
+    <!--Comentarios-->
+    <div class="col-lg-12">
+        <div>
+            <h2>Comentarios</h2>
+            <div id="reader">
+                <div class="comment_box">
+                    <div class="inside_comment">
+                        <div class="comment-meta">
+                            <div class="commentsuser">Jone</div>
+                            <div class="comment_date">December 1, 2012 at 1:32 am</div>
+                        </div>
+                    </div>
+                    <div class="comment-body">
+                        <p>Great blog right here! Also your website quite a bit up fast! What web host are you the use of? Can I am getting your affiliate link for your host? I want my site loaded up as fast as yours lol.</p>
+                    </div>
+                    <div class="comment_date">Rating 4.3 de 5</div>
+                </div>
+            </div>
+
+            <div id="reader">
+                <div class="comment_box">
+                    <div class="inside_comment">
+                        <div class="comment-meta">
+                            <div class="commentsuser">Jone</div>
+                            <div class="comment_date">December 1, 2012 at 1:32 am</div>
+                        </div>
+                    </div>
+                    <div class="comment-body">
+                        <p>Great blog right here! Also your website quite a bit up fast! What web host are you the use of? Can I am getting your affiliate link for your host? I want my site loaded up as fast as yours lol.</p>
+                    </div>
+                    <div class="comment_date">Rating 4.3 de 5</div>
+                </div>
+            </div>
+
+            <div id="reader">
+                <div class="comment_box">
+                    <div class="inside_comment">
+                        <div class="comment-meta">
+                            <div class="commentsuser">Jone</div>
+                            <div class="comment_date">December 1, 2012 at 1:32 am</div>
+                        </div>
+                    </div>
+                    <div class="comment-body">
+                        <p>Great blog right here! Also your website quite a bit up fast! What web host are you the use of? Can I am getting your affiliate link for your host? I want my site loaded up as fast as yours lol.</p>
+                    </div>
+                    <div class="comment_date">Rating 4.3 de 5</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="form-group purple-border">
+            <label for="exampleFormControlTextarea4">Colorful border</label>
+            <textarea class="form-control" id="exampleFormControlTextarea4" rows="3"></textarea>
+        </div>
+    </div>
+
+</div>
+
 <div>
     <h4>Book</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.seq)
+            @Html.DisplayNameFor(model => model.title) <!--Esto no sirve eskide-->
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.seq)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.title)
+            @Html.DisplayFor(model => model.title) <!--Estos contiene la info-->
         </dd>
 
         <dt>

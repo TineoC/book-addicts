@@ -4,10 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BibliotecaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BibliotecaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Biblioteca.dbo.Book' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Book">
           <Key>
             <PropertyRef Name="id" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="createdDate" />
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="title" Type="varchar" MaxLength="250" Nullable="false" />
@@ -19,9 +23,17 @@
           <Property Name="author" Type="varchar" MaxLength="250" />
           <Property Name="genre" Type="varchar" MaxLength="30" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Biblioteca.dbo.User' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="lastName" />
+            <PropertyRef Name="username" />
+            <PropertyRef Name="password" />
+            <PropertyRef Name="email" />
+            <PropertyRef Name="createdDate" />
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="70" Nullable="false" />
@@ -32,23 +44,44 @@
           <Property Name="createdDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityContainer Name="BibliotecaModelStoreContainer">
-          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book" EntityType="Self.Book" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Book].[id] AS [id], 
+    [Book].[title] AS [title], 
+    [Book].[year] AS [year], 
+    [Book].[publisher] AS [publisher], 
+    [Book].[createdDate] AS [createdDate], 
+    [Book].[description] AS [description], 
+    [Book].[cover] AS [cover], 
+    [Book].[author] AS [author], 
+    [Book].[genre] AS [genre]
+    FROM [dbo].[Book] AS [Book]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="User" EntityType="Self.User" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [User].[id] AS [id], 
+    [User].[name] AS [name], 
+    [User].[lastName] AS [lastName], 
+    [User].[username] AS [username], 
+    [User].[password] AS [password], 
+    [User].[email] AS [email], 
+    [User].[createdDate] AS [createdDate]
+    FROM [dbo].[User] AS [User]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BibliotecaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="BibliotecaEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Book" EntityType="BibliotecaModel.Book" />
-          <EntitySet Name="User" EntityType="BibliotecaModel.User" />
-        </EntityContainer>
         <EntityType Name="Book">
           <Key>
             <PropertyRef Name="id" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="createdDate" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="year" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="publisher" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
           <Property Name="createdDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -60,15 +93,25 @@
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="lastName" />
+            <PropertyRef Name="username" />
+            <PropertyRef Name="password" />
+            <PropertyRef Name="email" />
+            <PropertyRef Name="createdDate" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="lastName" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
-          <Property Name="username" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="320" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="320" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="createdDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityContainer Name="BibliotecaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Book" EntityType="Self.Book" />
+          <EntitySet Name="User" EntityType="Self.User" />
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -78,28 +121,28 @@
           <EntitySetMapping Name="Book">
             <EntityTypeMapping TypeName="BibliotecaModel.Book">
               <MappingFragment StoreEntitySet="Book">
-                <ScalarProperty Name="genre" ColumnName="genre" />
-                <ScalarProperty Name="author" ColumnName="author" />
-                <ScalarProperty Name="cover" ColumnName="cover" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-                <ScalarProperty Name="publisher" ColumnName="publisher" />
-                <ScalarProperty Name="year" ColumnName="year" />
-                <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="publisher" ColumnName="publisher" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="cover" ColumnName="cover" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="BibliotecaModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="lastName" ColumnName="lastName" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

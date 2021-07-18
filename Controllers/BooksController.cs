@@ -21,6 +21,7 @@ namespace Biblioteca.Controllers
             return View(db.Book.ToList());
         }
 
+
         // GET: Books/Details/5
         public ActionResult Details(Guid? id)
         {
@@ -49,8 +50,6 @@ namespace Biblioteca.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,title,year,publisher,createdDate,description,cover,author,genre")] Book book)
         {
-            if (ModelState.IsValid)
-            {
                 book.id = Guid.NewGuid();
                 book.createdDate = DateTime.Now;
 
@@ -70,7 +69,6 @@ namespace Biblioteca.Controllers
                 db.Book.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
 
             return View(book);
         }
@@ -95,7 +93,7 @@ namespace Biblioteca.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,seq,title,year,publisher,createdDate,description,cover,author,genre")] Book book)
+        public ActionResult Edit([Bind(Include = "id,title,year,publisher,createdDate,description,cover,author,genre")] Book book)
         {
             if (ModelState.IsValid)
             {
