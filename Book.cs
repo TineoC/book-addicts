@@ -14,13 +14,6 @@ namespace Biblioteca
     
     public partial class Book
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Book()
-        {
-            this.Comment = new HashSet<Comment>();
-            this.Valoration1 = new HashSet<Valoration>();
-        }
-    
         public System.Guid id { get; set; }
         public string title { get; set; }
         public string year { get; set; }
@@ -31,10 +24,5 @@ namespace Biblioteca
         public string author { get; set; }
         public string genre { get; set; }
         public Nullable<double> valoration { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comment { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Valoration> Valoration1 { get; set; }
     }
 }

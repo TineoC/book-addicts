@@ -28,9 +28,7 @@ namespace Biblioteca
         }
     
         public virtual DbSet<Book> Book { get; set; }
-        public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<Valoration> Valoration { get; set; }
     
         public virtual ObjectResult<books_login_Result> books_login(string username, string password)
         {

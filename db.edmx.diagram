@@ -5,14 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="9bc4be8e3a4943a4b2cfa10dfe14a8b8" Name="Diagram1">
-        <EntityTypeShape EntityType="BibliotecaModel.Book" Width="1.5" PointX="0.75" PointY="6.875" />
-        <EntityTypeShape EntityType="BibliotecaModel.Comment" Width="1.5" PointX="3" PointY="3.625" />
-        <EntityTypeShape EntityType="BibliotecaModel.User" Width="1.5" PointX="0.75" PointY="3.625" />
-        <EntityTypeShape EntityType="BibliotecaModel.Valoration" Width="1.5" PointX="3" PointY="0.75" />
-        <AssociationConnector Association="BibliotecaModel.FK_Comment_Book" />
-        <AssociationConnector Association="BibliotecaModel.FK_Valoration_Book" />
-        <AssociationConnector Association="BibliotecaModel.FK_Comment_User" />
-        <AssociationConnector Association="BibliotecaModel.FK_Valoration_User" />
+        <EntityTypeShape EntityType="BibliotecaModel.Book" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BibliotecaModel.User" Width="1.5" PointX="2.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

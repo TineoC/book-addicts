@@ -163,4 +163,3 @@ C:\Users\oscar\Documents\book-addicts\obj\Debug\Biblioteca.csproj.CoreCompileInp
 C:\Users\oscar\Documents\book-addicts\obj\Debug\Biblioteca.csproj.CopyComplete
 C:\Users\oscar\Documents\book-addicts\obj\Debug\Biblioteca.dll
 C:\Users\oscar\Documents\book-addicts\obj\Debug\Biblioteca.pdb
-C:\Users\oscar\Documents\book-addicts\obj\Debug\Biblioteca.csproj.AssemblyReference.cache

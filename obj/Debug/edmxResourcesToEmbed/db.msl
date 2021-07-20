@@ -15,6 +15,17 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="login_books" FunctionName="BibliotecaModel.Store.login_books">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BibliotecaModel.login_books_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+          <ScalarProperty Name="userType" ColumnName="userType" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <EntitySetMapping Name="Book">
       <EntityTypeMapping TypeName="BibliotecaModel.Book">
         <MappingFragment StoreEntitySet="Book">
@@ -31,17 +42,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Comment">
-      <EntityTypeMapping TypeName="BibliotecaModel.Comment">
-        <MappingFragment StoreEntitySet="Comment">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-          <ScalarProperty Name="comment1" ColumnName="comment" />
-          <ScalarProperty Name="idUser" ColumnName="idUser" />
-          <ScalarProperty Name="idBook" ColumnName="idBook" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="User">
       <EntityTypeMapping TypeName="BibliotecaModel.User">
         <MappingFragment StoreEntitySet="User">
@@ -53,26 +53,5 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Valoration">
-      <EntityTypeMapping TypeName="BibliotecaModel.Valoration">
-        <MappingFragment StoreEntitySet="Valoration">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="userValoration" ColumnName="userValoration" />
-          <ScalarProperty Name="idUser" ColumnName="idUser" />
-          <ScalarProperty Name="idBook" ColumnName="idBook" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="login_books" FunctionName="BibliotecaModel.Store.login_books">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="BibliotecaModel.login_books_Result">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="password" ColumnName="password" />
-          <ScalarProperty Name="createdDate" ColumnName="createdDate" />
-          <ScalarProperty Name="userType" ColumnName="userType" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
