@@ -2,82 +2,92 @@
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout - Details.cshtml";
 }
 
-<h2>Details</h2>
+<head>
+    <style>
+        #reader {
+            float: left;
+        }
 
-<div>
-    <h4>Book</h4>
-    <hr />
-    <dl class="dl-horizontal">
+            #reader ol {
+                margin: 0;
+                padding: 0;
+            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.title)
-        </dt>
+            #reader li {
+                list-style: none outside none;
+                margin-bottom: 6px;
+            }
 
-        <dd>
-            @Html.DisplayFor(model => model.title)
-        </dd>
+            #reader .comment_box {
+                background: none repeat scroll 0 0 #F6F6F6;
+                float: left;
+                margin-bottom: 20px;
+                padding: 5px;
+                box-sizing: content-box;
+                border: 1px solid #CCCCCC;
+                width: 100%;
+            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.year)
-        </dt>
+            #reader .comment-meta {
+                margin-bottom: 4px;
+                overflow: auto;
+            }
 
-        <dd>
-            @Html.DisplayFor(model => model.year)
-        </dd>
+            #reader .commentsuser {
+                float: left;
+                font-size: 18px;
+                color: #000000;
+                font-weight: bold;
+            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.publisher)
-        </dt>
+            #reader .comment_date {
+                float: right;
+                font-size: 12px;
+                color: #000;
+            }
 
-        <dd>
-            @Html.DisplayFor(model => model.publisher)
-        </dd>
+            #reader .comment_rating {
+                float: right;
+                font-size: 12px;
+                color: #000;
+            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.createdDate)
-        </dt>
+            #reader .comment-body {
+                color: #848484;
+                font-size: 14px;
+            }
 
-        <dd>
-            @Html.DisplayFor(model => model.createdDate)
-        </dd>
+        ol li {
+            list-style-type: none;
+        }
+    </style>
+</head>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
+<div class="row">
 
-        <dd>
-            @Html.DisplayFor(model => model.description)
-        </dd>
+    <!--Libro Principal-->
+    <div class="col-md-6">
+        <center>
+            <img src="~/Public/Covers/@Model.cover" style="height:400px" />
+            <br />
+        </center>
+    </div>
+    <div class="col-md-6" style="padding-right:36px;text-align: justify;">
+        <h1 style="margin-top: 0px">@Html.DisplayFor(model => model.title)</h1>
+        <h4>@Html.DisplayFor(model => model.author)</h4>
+        <br />
+        <p style="font-size: 16px">@Html.DisplayFor(model => model.description)</p>
+        <br />
+        <h4>Publicado por: @Html.DisplayFor(model => model.publisher) </h4>
+        <h4>Publicado en: @Html.DisplayFor(model => model.year) </h4>
+        <h4>Etiquetado como: @Html.DisplayFor(model => model.genre) </h4>
+        <br />
+        <h4>
+            @Html.ActionLink("Editar libro", "Edit", new { id = Model.id }) | @Html.ActionLink("Borrar libro", "Delete", new { id = Model.id})
+        </h4>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.cover)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.cover)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.author)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.author)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.genre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.genre)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

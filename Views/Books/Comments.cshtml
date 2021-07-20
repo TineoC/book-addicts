@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Biblioteca.Comment>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="row">
+
+    <!--Comentarios-->
+    <div class="col-lg-12">
+        <div>
+            <h2>Comentarios</h2>
+            @foreach (var item in Model)
+            {
+                <div id="reader">
+                    <div class="comment_box">
+                        <div class="inside_comment">
+                            <div class="comment-meta">
+                                <div class="commentsuser">Model.User.ToString()</div>
+                                <div class="comment_date">Model.createdDate</div>
+                            </div>
+                        </div>
+                        <div class="comment-body">
+                            <p>Model.comment1</p>
+                        </div>
+                        <div class="comment_date">Model.User.Valoration.ToString()</div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

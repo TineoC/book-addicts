@@ -10,11 +10,13 @@
     <p class="lead">Es un espacio donde podrás encontrar tus libros favoritos y unirte a nuestra comunidad lectora.</p>
 </div>
 
-<div class="container">
-    @foreach (var item in Model)
-    {
-        <div class="row">
-            <div class="col-sm">
+<div class="container" style="margin: auto">
+    <div class="row" style="justify-content: space-between">
+        @{ var counter = 1; }
+
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-3" style="max-width: 200px">
                 <a href="~/Books/Details/@item.id">
                     <img src="~/Public/Covers/@item.cover" style="height: 200px; width: auto" />
                 </a>
@@ -28,7 +30,14 @@
                     </p>
                 </div>
             </div>
-        </div>
-     }
+
+            if (counter % 3 == 0)
+            {
+            @:</div><div class="row" style="justify-content: space-between">
+                counter = 0;
+            }
+            counter++;
+        }
+    </div>
 
 </div>
