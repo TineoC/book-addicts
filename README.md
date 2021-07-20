@@ -1,11 +1,11 @@
 # book-adicts
 
 ## Descripción del proyecto
-Este proyecto consiste en una tienda virtual de venta de libros. 
+Este proyecto consiste en una biblioteca virtual de libros. 
 
 ### Nuestros objetivos con este proyecto son
-+ Hacer uso de las buenas prácticas de la ingeniería de software
-+ Implementar Onion Architecture en una aplicación web ccon el framework .NET
++ Hacer uso de las buenas prácticas de la ingeniería de software.
++ Implementar Entity Framework y tecnologías .NET para realizar un proyecto de nuestra elección.
 
 ## Integrantes del equipo
 
